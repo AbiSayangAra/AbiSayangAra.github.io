@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Balikan Yuk — Responsive</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --accent:#ff6f91;
+      --accent-2:#e91e63;
+      --bg-start:#ffdde1;
+      --bg-end:#ee9ca7;
+      --card-bg: #ffffff;
+    }
+    html,body{height:100%;margin:0;font-family:Inter, Arial, sans-serif;}
+
+    .app {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(120deg,var(--bg-start),var(--bg-end));
+      padding:24px;
+      box-sizing:border-box;
+    }
+    .card {
+      width:100%;
+      max-width:900px;
+      background:var(--card-bg);
+      border-radius:16px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.15);
+      padding:28px;
+      box-sizing:border-box;
+    }
+
+    /* Views */
+    .view{ display:none; }
+    .view.active{ display:block; }
+
+    /* Index / Form */
+    .title { font-size:28px; color:var(--accent-2); margin:0 0 18px 0; text-align:center; }
+    .question { margin:12px 0; font-size:16px; color:#333;}
+    .radio { margin-right:10px; transform:translateY(2px); }
+    .btn { display:inline-block; margin-top:18px; padding:12px 20px; border-radius:10px; border:none; background:var(--accent-2); color:#fff; font-weight:600; cursor:pointer; font-size:16px; }
+    .btn.secondary { background:#444; }
+    .note { margin-top:10px; color:#666; font-size:13px; text-align:center; }
+
+    /* Video view */
+    .video-wrap {
+      background: linear-gradient(180deg,#04060a,#111);
+      padding:22px;
+      border-radius:12px;
+      color:#fff;
+      text-align:center;
+    }
+    .video-title { font-size:26px; color:var(--accent); margin-bottom:14px; font-family:Playfair Display, serif; }
+    video { width:100%; height:auto; border-radius:10px; outline:none; box-shadow:0 12px 40px rgba(0,0,0,0.6); max-height:65vh; }
+    .desc { margin-top:14px; color:#ddd; line-height:1.5; font-size:16px; }
+
+    /* Question after video */
+    #postQuestion { margin-top:20px; display:none; }
+    #postQuestion button { margin:8px; padding:12px 18px; border-radius:10px; border:none; cursor:pointer; font-weight:600; font-size:16px; }
+    #postQuestion .yes { background:var(--accent); color:#fff; }
+    #postQuestion .no { background:#222; color:#fff; }
+
+    /* End view */
+    .end-wrap {
+      min-height:40vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(180deg,#000,#0b0b0b);
+      color:#fff;
+      border-radius:12px;
+      padding:30px;
+      box-sizing:border-box;
+    }
+    .end-text {
+      font-family: 'Great Vibes', cursive;
+      color:var(--accent);
+      font-size:64px;
+      text-shadow:0 6px 30px rgba(255,111,145,0.6);
+      opacity:0;
+      transform:translateY(20px);
+      transition:opacity 1.6s ease, transform 1.6s ease;
+      text-align:center;
+    }
+    .end-text.visible { opacity:1; transform:translateY(0); }
+
+    /* Balikan view */
+    .balikan-wrap {
+      min-height:40vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:12px;
+      text-align:center;
+    }
+    .balikan-title { font-family:Playfair Display, serif; font-size:32px; color:var(--accent-2); }
+    .balikan-msg { color:#333; max-width:700px; }
+
+    /* Responsive */
+    @media (max-width:768px){
+      .card { padding:20px; }
+      .title { font-size:22px; }
+      .video-title { font-size:20px; }
+      .desc { font-size:14px; }
+      .end-text { font-size:42px; }
+      .btn, #postQuestion button { width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="card">
+
+      <!-- VIEW: Home -->
+      <section id="view-home" class="view active">
+        <h1 class="title"> Ara Masih sayang sama abi gak? :) </h1>
+        <div class="question">
+          <label><input class="radio" type="radio" name="jawaban" value="ya"> Iya, aaraa masih sayaang ❤️</label>
+        </div>
+        <div class="question">
+          <label><input class="radio" type="radio" name="jawaban" value="tidak"> Maaf, araa tidak sayang lagi 😢</label>
+        </div>
+        <button class="btn" id="btn-send">Kirim Jawaban</button>
+        <div class="note">Program di buat dengan <strong>SYSTEMLINUX</strong> oleh Abiyy</div>
+      </section>
+
+      <!-- VIEW: Video -->
+      <section id="view-video" class="view">
+        <div class="video-wrap">
+          <div class="video-title">Kenangan Kita 💭</div>
+          <video id="mainVideo" playsinline controls>
+            <source src="video.mp4" type="video/mp4">
+          </video>
+          <div class="desc">
+            Setiap detik yang pernah kita lewati terekam indah di sini.<br>
+            Terima kasih sudah pernah jadi bagian terindah dalam hidupku. ❤️
+          </div>
+          <div id="postQuestion">
+            <h3>Masih yakin nggak sayang? 🤔</h3>
+            <button class="yes" id="btn-back">Masih sayang ❤️</button>
+            <button class="no" id="btn-no">Tidak  💔</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: End -->
+      <section id="view-end" class="view">
+        <div class="end-wrap">
+          <div id="endText" class="end-text">Story end here</div>
+        </div>
+      </section>
+
+      <!-- VIEW: Balikan -->
+      <section id="view-balikan" class="view">
+        <div class="balikan-wrap">
+          <div class="balikan-title">Aku Mau Coba Lagi 💖</div>
+          <div class="balikan-msg">
+            Terima kasih sudah mau kembali.  
+            Semoga cerita kita punya bab baru yang lebih indah. ✨
+          </div>
+          <button class="btn secondary" id="btn-home-from-balikan">Kembali ke awal</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    const showView = id => {
+      document.querySelectorAll('.view').forEach(v=> v.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    };
+
+    const btnSend = document.getElementById('btn-send');
+    const btnBack = document.getElementById('btn-back');
+    const btnNo = document.getElementById('btn-no');
+    const btnHomeFromBalikan = document.getElementById('btn-home-from-balikan');
+    const mainVideo = document.getElementById('mainVideo');
+    const postQuestion = document.getElementById('postQuestion');
+    const endText = document.getElementById('endText');
+
+    // EmailJS placeholder
+    const EMAILJS_PUBLIC_KEY = "QEcJdCPWHhlKGmslx";
+    const EMAILJS_SERVICE_ID = "service_m5zvbdi";
+    const EMAILJS_TEMPLATE_ID = "template_ujxaoxj";
+
+    if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") emailjs.init(EMAILJS_PUBLIC_KEY);
+
+    btnSend.addEventListener('click', () => {
+      const choice = document.querySelector('input[name="jawaban"]:checked');
+      if (!choice) return alert("Pilih dulu jawabannya 😊");
+      if (choice.value === "ya") {
+        if (EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
+          alert("EmailJS belum dikonfigurasi.");
+          return;
+        }
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          to_name: "Namamu",
+          message: "Dia mau balikan sama kamu!"
+        }).then(() => alert("Yey! Jawaban terkirim 🎉"))
+        .catch(e => alert("Gagal kirim: " + JSON.stringify(e)));
+      } else {
+        showView('view-video');
+        mainVideo.play().catch(()=>{});
+      }
+    });
+
+    mainVideo.addEventListener('ended', ()=> postQuestion.style.display="block");
+    btnBack.addEventListener('click', ()=> showView('view-balikan'));
+    btnNo.addEventListener('click', ()=> {
+      showView('view-end');
+      setTimeout(()=> endText.classList.add('visible'), 200);
+    });
+    btnHomeFromBalikan.addEventListener('click', ()=> {
+      document.querySelectorAll('input[name="jawaban"]').forEach(i=> i.checked=false);
+      postQuestion.style.display="none";
+      endText.classList.remove('visible');
+      showView('view-home');
+    });
+  </script>
+</body>
+</html>
